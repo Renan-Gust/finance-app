@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App de finança</title>
+
+    <link rel="stylesheet" href="index.css">
+
+</head>
+<body>
+    <div id="container">
+        <div class="control-of-expenses">
+            <h1>Controle de Despesas</h1>
+            <div class="balance-wrapper">
+                <div class="current-balance">
+                    <h4>Saldo Atual</h4>
+                    <strong>R$ 0.00</strong>
+                </div>
+                <div class="balance">
+                    <div class="revenue">
+                        <h4>Receitas</h4>
+                        <span class="money plus">R$ 0.00</span>
+                    </div>
+                    <div class="expenses">
+                        <h4>Despesas</h4>
+                        <span class="money minus">R$ 0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="transactions">
+                <header><h3>Transações</h3></header>
+            </div>
+
+            <div class="add-transactions">
+                <header><h3>Adicionar Transação</h3></header>
+                <div class="details">
+                    <div class="transaction-name">
+                        <label for="transaction-name">Nome</label>
+                        <input type="text" id="transaction-name" placeholder="Nome da transação">
+                    </div>
+
+                    <div class="transaction-value">
+                        <label for="transaction-value">Valor</label>
+                        <span>(+ para positivo / - para negativo)</span>
+                        <input type="text" id="transaction-value" placeholder="Valor da transação">
+                    </div>
+
+                    <button>Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="index.js"></script>
+</html>
