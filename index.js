@@ -1,109 +1,73 @@
 const inputTransactionName = document.querySelector("input#transaction-name")
 const inputTransactionValue = document.querySelector("input#transaction-value")
 
-const transactionsHTML = document.querySelector(".transactions")
+const revenues = document.querySelector(".balance .revenues span")
+const expenses = document.querySelector(".balance .expenses span")
+
+const currentBalance = document.querySelector(".current-balance strong")
 
 let transactions = []
 
 document.querySelector("button").addEventListener("click", () => {
     const transactionValue = inputTransactionValue.value
-    // const stringToArray = transactionValue.split("")
+    const transactionName = inputTransactionName.value
+    const stringToArray = transactionValue.split("")
 
-    // //Find the character in the array
-    // const lessSignalFound = stringToArray.find(minus => minus.startsWith("-"))
-    // const plusSignalFound = stringToArray.find(minus => minus.startsWith("+"))
+    if(transactionName === "" || transactionValue === "") {
+        alert("Nome da transação ou valor da transação estão vazios")
+        return
+    }
 
+    //Find the character in the array
+    const lessSignalFound = stringToArray.find(minus => minus.startsWith("-"))
+    const plusSignalFound = stringToArray.find(minus => minus.startsWith("+"))
 
+    //Remove character
+    const removeLess = transactionValue.split("-")
+    const removePlus = transactionValue.split("+")
+
+    const filteredLess = removeLess.filter(el => el != "")
+    const filteredPlus = removePlus.filter(el => el != "")
+
+    if(lessSignalFound == "-") {
+        transactions.push({
+            removed: `${filteredLess}`
+        })
+    }
+
+    if(plusSignalFound == "+") {
+        transactions.push({
+            added: `${filteredPlus}`
+        })
+    }
     
-    
-    // //Remove character
-    // const removeLess = transactionValue.split("-")
-    // const removePlus = transactionValue.split("+")
-
-
-    // const filteredLess = removeLess.filter((el) => {
-    //     return el != ""
-    // })
-
-    // const filteredPlus = removePlus.filter((el) => {
-    //     return el != ""
-    // })
-
-    // if(lessSignalFound == "-") {
-    //     transactions.push({
-    //         removed: `${filteredLess.toString()}`
-    //     })
-    // }
-
-    // if(plusSignalFound == "+") {
-    //     transactions.push({
-    //         added: `${filteredPlus.toString()}`
-    //     })
-    // }
-
-    transactions.push({
-        added: transactionValue
-    })
-
-    // console.log(transactions[0].added)
-
-
-    
-
-    // const total = transactions.reduce((accumulator, finaValue) => {
-    //     // return Number(accumulator) + Number(finaValue)
-    //     return console.log(transactions[0])
-    // })
-    
-
-    const transactionsElement = document.querySelector(".transactions")
+    const transactionsElement = document.querySelector(".transactions .transactions-block")
     
     for(let value of transactions) {
-        console.log(value)
-        console.log(transactions)
-
-        transactionsElement.innerHTML += `
-            <div>
-            <p>Adicionado: ${value.added}</p>
+        if(plusSignalFound == "+"){
+            transactionsElement.innerHTML += `
+            <div class="transactions-details" style="border-right: 5px solid #2ecc71">
+                <div>
+                    <p>${transactionName}</p>
+                    <p>+ R$ ${value.added}</p>
+                </div>
             </div>
-        `
-        
+            `
+            revenues.innerText = `R$ ${Number(value.added).toFixed(2)}`
 
-        // if(plusSignalFound == "+"){
-        //     transactionsElement.innerHTML += `
-        //     <div>
-        //         <p>Adicionado: ${value.added}</p>
-        //     </div>
-        //     `
-        // } 
-        // else {
-        //     transactionsElement.innerHTML += `
-        //     <div>
-        //         <p>Retirado: ${transactions[i].removed}</p>
-        //     </div>
-        //     `
-    
-        //     console.log(transactions[i].removed)
-        // }
-
-        // if(lessSignalFound == "-") {
-            
-            
-        // }
-
-        
+        } else {
+            transactionsElement.innerHTML += `
+            <div class="transactions-details" style="border-right: 5px solid #c0392b">
+                <div>
+                    <p>${transactionName}</p>
+                    <p>- R$ ${value.removed}</p>
+                </div>
+            </div>
+            `
+            expenses.innerText = `R$ ${Number(value.removed).toFixed(2)}`
+        }
     }
+
+    // transactions.splice(0, transactions.length)    
 })
 
-
-/*
-Quando clicar no botão 
-
-verificar se o input value e o nome da transação não estar vazio
-e verificar o sinal
-
-e adicionar no array transitions que vai renderizar
-nas transações
-
-
-*/
