@@ -88,8 +88,7 @@ label{
     margin: 10px 0;
 }
 
-input[type='text'],
-input[type='number']{
+input[type='text']{
     width: 100%;
     padding: 10px;
 

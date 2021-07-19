@@ -1,12 +1,14 @@
 const inputTransactionName = document.querySelector("input#transaction-name")
 const inputTransactionValue = document.querySelector("input#transaction-value")
 
-const revenues = document.querySelector(".balance .revenues span")
-const expenses = document.querySelector(".balance .expenses span")
+const revenues = document.querySelector(".balance .revenues div")
+const expenses = document.querySelector(".balance .expenses div")
 
 const currentBalance = document.querySelector(".current-balance strong")
 
 let transactions = []
+let totalAdded = 0
+let totalRemoved = 0
 
 document.querySelector("button").addEventListener("click", () => {
     const transactionValue = inputTransactionValue.value
@@ -42,32 +44,56 @@ document.querySelector("button").addEventListener("click", () => {
     }
     
     const transactionsElement = document.querySelector(".transactions .transactions-block")
-    
+
     for(let value of transactions) {
         if(plusSignalFound == "+"){
             transactionsElement.innerHTML += `
             <div class="transactions-details" style="border-right: 5px solid #2ecc71">
                 <div>
                     <p>${transactionName}</p>
-                    <p>+ R$ ${value.added}</p>
+                    <p class="added">+ R$  <span>${value.added}</span> </p>
                 </div>
             </div>
             `
-            revenues.innerText = `R$ ${Number(value.added).toFixed(2)}`
+            const addedSpanLength = document.querySelectorAll("p.added span")
+            const addedSpanArray = []
+
+            addedSpanLength.forEach((item) => {
+                let textToNumber = Number(item.textContent)
+                addedSpanArray.push(textToNumber)
+            })
+
+            const totalAmountAdded = addedSpanArray.reduce((acc, acc2) => acc + acc2)
+            
+            revenues.innerHTML = `<p class="money plus">R$ <span>${totalAmountAdded.toFixed(2)}</span> </p>`
+            totalAdded = totalAmountAdded
+            transactions.splice(0, transactions.length)
 
         } else {
             transactionsElement.innerHTML += `
             <div class="transactions-details" style="border-right: 5px solid #c0392b">
                 <div>
                     <p>${transactionName}</p>
-                    <p>- R$ ${value.removed}</p>
+                    <p class="removed">- R$ <span>${value.removed}</span> </p>
                 </div>
             </div>
             `
-            expenses.innerText = `R$ ${Number(value.removed).toFixed(2)}`
+            const removedSpanLength = document.querySelectorAll("p.removed span")
+            const removedSpanArray = []
+
+            removedSpanLength.forEach((item) => {
+                let textToNumber = Number(item.textContent)
+                removedSpanArray.push(textToNumber)
+            })
+
+            const totalAmountRemoved = removedSpanArray.reduce((acc, acc2) => acc + acc2)
+
+            expenses.innerHTML = `<p class="money minus">R$ <span>${totalAmountRemoved.toFixed(2)}</span> </p>`
+            totalRemoved = totalAmountRemoved
+            transactions.splice(0, transactions.length)
         }
     }
 
-    // transactions.splice(0, transactions.length)    
+    const total = totalAdded - totalRemoved
+    currentBalance.innerText = `R$ ${total.toFixed(2)}`
 })
-
