@@ -15,14 +15,20 @@ document.querySelector("button").addEventListener("click", () => {
     const transactionName = inputTransactionName.value
     const stringToArray = transactionValue.split("")
 
+    //Find the character in the array
+    const lessSignalFound = stringToArray.find(minus => minus.startsWith("-"))
+    const plusSignalFound = stringToArray.find(minus => minus.startsWith("+"))
+
+    //Errors found 
+    if(lessSignalFound == "-" && plusSignalFound == "+"){
+        alert("Foram encontrados dois caracteres no valor da transação")
+        return
+    }
+
     if(transactionName === "" || transactionValue === "") {
         alert("Nome da transação ou valor da transação estão vazios")
         return
     }
-
-    //Find the character in the array
-    const lessSignalFound = stringToArray.find(minus => minus.startsWith("-"))
-    const plusSignalFound = stringToArray.find(minus => minus.startsWith("+"))
 
     //Remove character
     const removeLess = transactionValue.split("-")
@@ -48,10 +54,13 @@ document.querySelector("button").addEventListener("click", () => {
     for(let value of transactions) {
         if(plusSignalFound == "+"){
             transactionsElement.innerHTML += `
-            <div class="transactions-details" style="border-right: 5px solid #2ecc71">
-                <div>
-                    <p>${transactionName}</p>
-                    <p class="added">+ R$  <span>${value.added}</span> </p>
+            <div class="transaction-wrapper">
+                <div class="delete">X</div>
+                <div class="transaction-details" style="border-right: 5px solid #2ecc71">
+                    <div>
+                        <p>${transactionName}</p>
+                        <p class="added">+ R$  <span>${value.added}</span> </p>
+                    </div>
                 </div>
             </div>
             `
@@ -71,10 +80,13 @@ document.querySelector("button").addEventListener("click", () => {
 
         } else {
             transactionsElement.innerHTML += `
-            <div class="transactions-details" style="border-right: 5px solid #c0392b">
-                <div>
-                    <p>${transactionName}</p>
-                    <p class="removed">- R$ <span>${value.removed}</span> </p>
+            <div class="transaction-wrapper">
+                <div class="delete">X</div>
+                <div class="transaction-details" style="border-right: 5px solid #c0392b">
+                    <div>
+                        <p>${transactionName}</p>
+                        <p class="removed">- R$ <span>${value.removed}</span> </p>
+                    </div>
                 </div>
             </div>
             `
@@ -96,4 +108,11 @@ document.querySelector("button").addEventListener("click", () => {
 
     const total = totalAdded - totalRemoved
     currentBalance.innerText = `R$ ${total.toFixed(2)}`
+
+    const deleteTransaction = document.querySelectorAll(".delete")
+    deleteTransaction.forEach((item) => {
+        item.addEventListener("click", (event) => {
+            event.target.closest(".transaction-wrapper").remove()
+        })
+    })
 })

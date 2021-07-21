@@ -25,6 +25,7 @@ body {
 
 #container{
     width: 350px;
+    margin-top: 30px;
 }
 
 .control-of-expenses .balance-wrapper{
@@ -123,18 +124,41 @@ button:hover{
     overflow-y: auto;
 }
 
-.transactions-block .transactions-details + .transactions-details{
+.transaction-wrapper + .transaction-wrapper{
     margin-top: 10px;
 }
 
-.transactions-details{
+.transaction-wrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.transaction-wrapper .delete{
+    padding: 2px 5px;
+    background-color: #e74c3c;
+    color: white;
+
+    font-size: 20px;
+    transition: 0.3s ease-in;
+
+    cursor: pointer;
+    display: none;
+}
+
+.transaction-wrapper:hover .delete{
+    display: block;
+}
+
+.transaction-details{
     background-color: #fff;
     box-shadow: var(--box-shadow);
 
     cursor: pointer;
+    flex: 1;
 }
 
-.transactions-details > div{
+.transaction-details > div{
     padding: 14px;
     display: flex;
     justify-content: space-between;
