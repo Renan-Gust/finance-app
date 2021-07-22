@@ -1,0 +1,44 @@
+.transactions-block{
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.transaction-wrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.transaction-wrapper + .transaction-wrapper{
+    margin-top: 10px;
+}
+
+.transaction-wrapper .delete{
+    padding: 2px 5px;
+    background-color: #e74c3c;
+    color: white;
+
+    font-size: 20px;
+    transition: 0.3s ease-in;
+
+    cursor: pointer;
+    display: none;
+}
+
+.transaction-wrapper:hover .delete{
+    display: block;
+}
+
+.transaction-details{
+    background-color: #fff;
+    box-shadow: var(--box-shadow);
+
+    cursor: pointer;
+    flex: 1;
+}
+
+.transaction-details > div{
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+}
